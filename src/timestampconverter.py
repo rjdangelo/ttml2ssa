@@ -112,7 +112,13 @@ class TimestampConverter(object):
         """Convert hh:mm:ss.fraction to milliseconds
         """
 
-        hh, mm, ss, fraction = re.split(r'[:.]', timestamp)
+        ts = re.split(r'[:.]', timestamp)
+        if len(ts) > 3:
+            hh, mm, ss, fraction = ts
+        else:
+            hh, mm, ss = ts
+            fraction = '000'
+
         hh, mm, ss = [int(i) for i in (hh, mm, ss)]
         # Resolution beyond ms is useless for our purposes
         ms = int(fraction[:3])
